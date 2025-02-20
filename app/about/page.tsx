@@ -89,7 +89,7 @@ export default function AboutPage() {
                 Warning
               </DialogTitle>
               <DialogDescription className="text-neutral-600 dark:text-neutral-400">
-                Scira is an AI search engine and is not associated with any cryptocurrency, memecoin, or token
+                SeekWise is an AI search engine and is not associated with any cryptocurrency, memecoin, or token
                 activities. Beware of impersonators.
               </DialogDescription>
             </DialogHeader>
@@ -120,8 +120,8 @@ export default function AboutPage() {
             {/* Company Name/Logo */}
             <motion.div variants={item} className="text-center">
               <Link href="/" className="inline-flex items-center gap-3 text-4xl font-bold">
-                <img src="/scira.png" alt="Scira Logo" className="h-12 w-12 invert" />
-                <span>Scira</span>
+                <img src="/logo.png" alt="SeekWise Logo" className="h-12 w-12 invert" />
+                <span>SeekWise</span>
               </Link>
             </motion.div>
 
@@ -146,7 +146,7 @@ export default function AboutPage() {
                   type="submit"
                   className="absolute right-2 top-2 h-10 px-4 rounded-xl bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-medium hover:opacity-90 transition-opacity"
                 >
-                  Ask Scira
+                  Ask SeekWise
                 </button>
               </div>
             </motion.form>
@@ -160,7 +160,7 @@ export default function AboutPage() {
 
             <motion.div variants={item} className="flex flex-wrap items-center justify-center gap-4">
               <Link
-                href="https://git.new/scira"
+                href="https://git.new/seekwise"
                 className="group relative inline-flex h-12 items-center gap-2 px-6 rounded-xl bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 hover:opacity-90 transition-all duration-300"
               >
                 <GithubLogo weight="fill" className="h-5 w-5" />
@@ -201,7 +201,7 @@ export default function AboutPage() {
           <div className="text-center space-y-4 mb-16">
             <h2 className="text-3xl font-bold">RAG & Search Grounding</h2>
             <p className="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
-              Watch how Scira combines RAG and search grounding to deliver accurate, up-to-date answers from reliable
+              Watch how SeekWise combines RAG and search grounding to deliver accurate, up-to-date answers from reliable
               sources.
             </p>
           </div>
@@ -424,7 +424,7 @@ export default function AboutPage() {
           <div className="text-center space-y-4">
             <h2 className="text-3xl font-bold">Community Recognition</h2>
             <p className="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
-              Join the growing community of developers and researchers using Scira.
+              Join the growing community of developers and researchers using SeekWise.
             </p>
           </div>
 
@@ -534,7 +534,7 @@ export default function AboutPage() {
           <div className="text-center space-y-4">
             <h2 className="text-3xl font-bold">Built For Everyone</h2>
             <p className="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
-              Whether you need quick answers or in-depth research, Scira adapts to your search needs.
+              Whether you need quick answers or in-depth research, SeekWise adapts to your search needs.
             </p>
           </div>
 
@@ -572,7 +572,7 @@ export default function AboutPage() {
         <div className="mx-auto max-w-5xl px-4 py-12">
           <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
             <div className="flex items-center gap-3">
-              <img src="/scira.png" alt="Scira Logo" className="h-8 w-8 invert" />
+              <img src="/logo.png" alt="SeekWise Logo" className="h-8 w-8 invert" />
               <p className="text-sm text-neutral-600 dark:text-neutral-400">
                 © {new Date().getFullYear()} All rights reserved.
               </p>
@@ -580,7 +580,7 @@ export default function AboutPage() {
 
             <div className="flex items-center gap-3">
               <Link
-                href="https://x.com/sciraai"
+                href="https://x.com/seekwise_ai"
                 className="rounded-lg p-2 text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800 transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -588,7 +588,7 @@ export default function AboutPage() {
                 <XLogo className="h-5 w-5" />
               </Link>
               <Link
-                href="https://git.new/scira"
+                href="https://git.new/seekwise"
                 className="rounded-lg p-2 text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800 transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"

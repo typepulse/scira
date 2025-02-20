@@ -1,6 +1,6 @@
-# Scira
+# SeekWise
 
-![Scira](/app/opengraph-image.png)
+![SeekWise](/app/opengraph-image.png)
 
 A minimalistic AI-powered search engine that helps you find information on the internet.
 
@@ -19,19 +19,6 @@ A minimalistic AI-powered search engine that helps you find information on the i
 
 - [Vercel AI SDK](https://sdk.vercel.ai/docs) - For AI model integration and streaming
 - [Tavily AI](https://tavily.com) - For search grounding and web search capabilities
-
-## Special Thanks
-
-<div align="center" markdown="1">
-
-[![Warp](https://github.com/user-attachments/assets/2bda420d-4211-4900-a37e-e3c7056d799c)](https://www.warp.dev/?utm_source=github&utm_medium=referral&utm_campaign=scira)<br>
-
-### **[Warp, the intelligent terminal](https://www.warp.dev/?utm_source=github&utm_medium=referral&utm_campaign=scira)**<br>
-
-[Available for MacOS and Linux](https://www.warp.dev/?utm_source=github&utm_medium=referral&utm_campaign=scira)<br>
-[Visit warp.dev to learn more](https://www.warp.dev/?utm_source=github&utm_medium=referral&utm_campaign=scira)
-
-</div>
 
 ## Features
 
@@ -72,9 +59,9 @@ A minimalistic AI-powered search engine that helps you find information on the i
 
 ### Deploy your own
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fzaidmukaddam%2Fscira&env=XAI_API_KEY,AZURE_RESOURCE_NAME,AZURE_API_KEY,OPENAI_API_KEY,ANTHROPIC_API_KEY,CEREBRAS_API_KEY,GROQ_API_KEY,E2B_API_KEY,UPSTASH_REDIS_REST_URL,UPSTASH_REDIS_REST_TOKEN,ELEVENLABS_API_KEY,TAVILY_API_KEY,EXA_API_KEY,TMDB_API_KEY,YT_ENDPOINT,FIRECRAWL_API_KEY,OPENWEATHER_API_KEY,SANDBOX_TEMPLATE_ID,GOOGLE_MAPS_API_KEY,MAPBOX_ACCESS_TOKEN,TRIPADVISOR_API_KEY,AVIATION_STACK_API_KEY,CRON_SECRET,BLOB_READ_WRITE_TOKEN,NEXT_PUBLIC_MAPBOX_TOKEN,NEXT_PUBLIC_POSTHOG_KEY,NEXT_PUBLIC_POSTHOG_HOST,NEXT_PUBLIC_GOOGLE_MAPS_API_KEY&envDescription=API%20keys%20and%20configuration%20required%20for%20Scira%20to%20function)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fzaidmukaddam%2Fseekwise&env=XAI_API_KEY,AZURE_RESOURCE_NAME,AZURE_API_KEY,OPENAI_API_KEY,ANTHROPIC_API_KEY,CEREBRAS_API_KEY,GROQ_API_KEY,E2B_API_KEY,UPSTASH_REDIS_REST_URL,UPSTASH_REDIS_REST_TOKEN,ELEVENLABS_API_KEY,TAVILY_API_KEY,EXA_API_KEY,TMDB_API_KEY,YT_ENDPOINT,FIRECRAWL_API_KEY,OPENWEATHER_API_KEY,SANDBOX_TEMPLATE_ID,GOOGLE_MAPS_API_KEY,MAPBOX_ACCESS_TOKEN,TRIPADVISOR_API_KEY,AVIATION_STACK_API_KEY,CRON_SECRET,BLOB_READ_WRITE_TOKEN,NEXT_PUBLIC_MAPBOX_TOKEN,NEXT_PUBLIC_POSTHOG_KEY,NEXT_PUBLIC_POSTHOG_HOST,NEXT_PUBLIC_GOOGLE_MAPS_API_KEY&envDescription=API%20keys%20and%20configuration%20required%20for%20SeekWise%20to%20function)
 
-## Set Scira as your default search engine
+## Set SeekWise as your default search engine
 
 1. **Open the Chrome browser settings**:
 
@@ -92,11 +79,11 @@ A minimalistic AI-powered search engine that helps you find information on the i
 
 4. **Set the search engine name**:
 
-   - Enter `Scira` in the "Search engine" field.
+   - Enter `SeekWise` in the "Search engine" field.
 
 5. **Set the search engine URL**:
 
-   - Enter `https://scira.app?q=%s` in the "URL with %s in place of query" field.
+   - Enter `https://seekwise.ai?q=%s` in the "URL with %s in place of query" field.
 
 6. **Set the search engine shortcut**:
 
@@ -106,7 +93,7 @@ A minimalistic AI-powered search engine that helps you find information on the i
    - Click on the three dots next to the search engine you just added.
    - Select "Make default" from the dropdown menu.
 
-After completing these steps, you should be able to use Scira as your default search engine in Chrome.
+After completing these steps, you should be able to use SeekWise as your default search engine in Chrome.
 
 ### Local development
 
@@ -129,11 +116,11 @@ The application can be run using Docker in two ways:
 1. Create a `.env` file based on `.env.example` with your API keys
 2. Build the Docker image:
    ```bash
-   docker build -t scira.app .
+   docker build -t seekwise.ai .
    ```
 3. Run the container:
    ```bash
-   docker run --env-file .env -p 3000:3000 scira.app
+   docker run --env-file .env -p 3000:3000 seekwise.ai
    ```
 
 The application uses a multi-stage build process to minimize the final image size and implements security best practices. The production image runs on Node.js LTS with Alpine Linux for a minimal footprint.

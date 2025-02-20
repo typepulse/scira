@@ -65,7 +65,7 @@ export function InstallPrompt() {
       case 'ios':
         return (
           <p className="text-neutral-600 dark:text-neutral-400">
-            Tap <Share className="inline h-4 w-4 mx-1" /> and then{" "}
+            Tap <Share className="inline h-4 w-4 mx-1" /> and then{' '}
             <span className="whitespace-nowrap">
               &ldquo;Add to Home Screen&rdquo; <Plus className="inline h-4 w-4 ml-1" />
             </span>
@@ -98,17 +98,10 @@ export function InstallPrompt() {
           <Card className="p-4 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-lg">
             <div className="flex items-start justify-between">
               <div className="space-y-2">
-                <h3 className="font-medium text-xl text-neutral-900 dark:text-neutral-100">
-                  Install Scira
-                </h3>
+                <h3 className="font-medium text-xl text-neutral-900 dark:text-neutral-100">Install SeekWise AI</h3>
                 {getInstructions()}
               </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-6 w-6"
-                onClick={handleDismiss}
-              >
+              <Button variant="ghost" size="icon" className="h-6 w-6" onClick={handleDismiss}>
                 <X className="h-4 w-4" />
                 <span className="sr-only">Dismiss</span>
               </Button>
@@ -116,17 +109,10 @@ export function InstallPrompt() {
 
             {platform !== 'ios' && (
               <div className="mt-4 flex justify-end gap-2">
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={handleDismiss}
-                >
+                <Button variant="secondary" size="sm" onClick={handleDismiss}>
                   Maybe later
                 </Button>
-                <Button
-                  size="sm"
-                  onClick={handleInstall}
-                >
+                <Button size="sm" onClick={handleInstall}>
                   Install
                 </Button>
               </div>

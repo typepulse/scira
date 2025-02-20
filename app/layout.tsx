@@ -1,7 +1,6 @@
 import { Analytics } from '@vercel/analytics/react';
 import { GeistSans } from 'geist/font/sans';
 import 'katex/dist/katex.min.css';
-import 'mapbox-gl/dist/mapbox-gl.css';
 import { Metadata, Viewport } from 'next';
 import { Syne } from 'next/font/google';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
@@ -10,31 +9,30 @@ import './globals.css';
 import { Providers } from './providers';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://scira.app'),
-  title: 'Scira',
-  description: 'Scira is a minimalistic AI-powered search engine that helps you find information on the internet.',
+  metadataBase: new URL('https://seekwise.ai'),
+  title: 'SeekWise',
+  description: 'SeekWise is a minimalistic AI-powered search engine that helps you find information on the internet.',
   openGraph: {
-    url: 'https://scira.app',
-    siteName: 'Scira',
+    url: 'https://seekwise.ai',
+    siteName: 'SeekWise',
   },
   keywords: [
-    'Scira',
-    'scira',
-    'scira.app',
-    'scira ai',
-    'scira ai app',
-    'scira',
-    'MiniPerplx',
-    'Scira AI',
+    'SeekWise',
+    'seekwise',
+    'seekwise.ai',
+    'seekwise ai',
+    'seekwise ai app',
+    'seekwise',
+    'SeekWise AI',
     'open source ai search engine',
     'minimalistic ai search engine',
     'ai search engine',
-    'Scira (Formerly MiniPerplx)',
+    'SeekWise (Formerly MiniPerplx)',
     'AI Search Engine',
     'mplx.run',
     'mplx ai',
     'zaid mukaddam',
-    'scira.how',
+    'seekwise.how',
     'search engine',
     'AI',
     'perplexity',

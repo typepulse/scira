@@ -36,7 +36,7 @@ const nextConfig = {
     return [
       {
         source: '/ph',
-        destination: 'https://www.producthunt.com/posts/scira',
+        destination: 'https://www.producthunt.com/posts/seekwise',
         permanent: true,
       },
     ];

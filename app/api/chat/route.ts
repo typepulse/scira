@@ -23,7 +23,7 @@ import {
 import Exa from 'exa-js';
 import { z } from 'zod';
 
-const scira = customProvider({
+const seekwise = customProvider({
   languageModels: {
     'openai:gpt-4o-mini': openai('gpt-4o-mini'),
     // 'meta:llama-3.3-70b': cerebras('llama-3.3-70b'),
@@ -167,7 +167,7 @@ export async function POST(req: Request) {
   return createDataStreamResponse({
     execute: async (dataStream) => {
       const result = streamText({
-        model: scira.languageModel(model),
+        model: seekwise.languageModel(model),
         maxSteps: 5,
         providerOptions: {
           groq: {
@@ -935,7 +935,7 @@ export async function POST(req: Request) {
                 });
 
                 const { object: analysisResult } = await generateObject({
-                  model: scira.languageModel('openai:gpt-4o-mini'),
+                  model: seekwise.languageModel('openai:gpt-4o-mini'),
                   temperature: 0.5,
                   schema: z.object({
                     findings: z.array(
@@ -1217,7 +1217,7 @@ export async function POST(req: Request) {
 
                 // Perform final synthesis of all findings
                 const { object: finalSynthesis } = await generateObject({
-                  model: scira.languageModel('openai:gpt-4o-mini'),
+                  model: seekwise.languageModel('openai:gpt-4o-mini'),
                   temperature: 0,
                   schema: z.object({
                     key_findings: z.array(
