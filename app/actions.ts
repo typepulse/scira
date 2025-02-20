@@ -3,7 +3,7 @@
 
 import { serverEnv } from '@/env/server';
 import { SearchGroupId } from '@/lib/utils';
-import { xai } from '@ai-sdk/xai';
+import { anthropic } from '@ai-sdk/anthropic';
 import { generateObject } from 'ai';
 import { z } from 'zod';
 
@@ -13,13 +13,12 @@ export async function suggestQuestions(history: any[]) {
   console.log(history);
 
   const { object } = await generateObject({
-    model: xai("grok-beta"),
+    model: anthropic('claude-3-5-sonnet-latest'),
     temperature: 0,
     maxTokens: 300,
     topP: 0.3,
     topK: 7,
-    system:
-      `You are a search engine query/questions generator. You 'have' to create only '3' questions for the search engine based on the message history which has been provided to you.
+    system: `You are a search engine query/questions generator. You 'have' to create only '3' questions for the search engine based on the message history which has been provided to you.
 The questions should be open-ended and should encourage further discussion while maintaining the whole context. Limit it to 5-10 words per question.
 Always put the user input's context is some way so that the next search knows what to search for exactly.
 Try to stick to the context of the conversation and avoid asking questions that are too general or too specific.
@@ -29,22 +28,24 @@ For location based conversations, always generate questions that are about the c
 Do not use pronouns like he, she, him, his, her, etc. in the questions as they blur the context. Always use the proper nouns from the context.`,
     messages: history,
     schema: z.object({
-      questions: z.array(z.string()).describe('The generated questions based on the message history.')
+      questions: z.array(z.string()).describe('The generated questions based on the message history.'),
     }),
   });
 
   return {
-    questions: object.questions
+    questions: object.questions,
   };
 }
 
 const ELEVENLABS_API_KEY = serverEnv.ELEVENLABS_API_KEY;
 
-export async function generateSpeech(text: string, voice: 'alloy' | 'echo' | 'fable' | 'onyx' | 'nova' | 'shimmer' = "alloy") {
-
-  const VOICE_ID = 'JBFqnCBsd6RMkjVDRZzb' // This is the ID for the "George" voice. Replace with your preferred voice ID.
-  const url = `https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}`
-  const method = 'POST'
+export async function generateSpeech(
+  text: string,
+  voice: 'alloy' | 'echo' | 'fable' | 'onyx' | 'nova' | 'shimmer' = 'alloy',
+) {
+  const VOICE_ID = 'JBFqnCBsd6RMkjVDRZzb'; // This is the ID for the "George" voice. Replace with your preferred voice ID.
+  const url = `https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}`;
+  const method = 'POST';
 
   if (!ELEVENLABS_API_KEY) {
     throw new Error('ELEVENLABS_API_KEY is not defined');
@@ -54,7 +55,7 @@ export async function generateSpeech(text: string, voice: 'alloy' | 'echo' | 'fa
     Accept: 'audio/mpeg',
     'xi-api-key': ELEVENLABS_API_KEY,
     'Content-Type': 'application/json',
-  }
+  };
 
   const data = {
     text,
@@ -63,17 +64,17 @@ export async function generateSpeech(text: string, voice: 'alloy' | 'echo' | 'fa
       stability: 0.5,
       similarity_boost: 0.5,
     },
-  }
+  };
 
-  const body = JSON.stringify(data)
+  const body = JSON.stringify(data);
 
   const input = {
     method,
     headers,
     body,
-  }
+  };
 
-  const response = await fetch(url, input)
+  const response = await fetch(url, input);
 
   const arrayBuffer = await response.arrayBuffer();
 
@@ -90,9 +91,7 @@ export async function fetchMetadata(url: string) {
     const html = await response.text();
 
     const titleMatch = html.match(/<title>(.*?)<\/title>/i);
-    const descMatch = html.match(
-      /<meta\s+name=["']description["']\s+content=["'](.*?)["']/i
-    );
+    const descMatch = html.match(/<meta\s+name=["']description["']\s+content=["'](.*?)["']/i);
 
     const title = titleMatch ? titleMatch[1] : '';
     const description = descMatch ? descMatch[1] : '';
@@ -106,18 +105,16 @@ export async function fetchMetadata(url: string) {
 
 const groupTools = {
   web: [
-    'web_search', 'get_weather_data',
+    'web_search',
+    'get_weather_data',
     'retrieve',
-    'nearby_search', 'track_flight',
-    'movie_or_tv_search', 'trending_movies', 
-    'trending_tv',
-    'reason_search'
+    // 'movie_or_tv_search',
+    // 'trending_movies',
+    // 'trending_tv',
+    'reason_search',
   ] as const,
-  academic: ['academic_search', 'code_interpreter'] as const,
-  youtube: ['youtube_search'] as const,
-  x: ['x_search'] as const,
-  analysis: ['code_interpreter', 'stock_chart', 'currency_converter'] as const,
-  fun: [] as const,
+  academic: ['academic_search'] as const,
+  analysis: ['academic_search', 'reason_search'] as const,
   extreme: ['reason_search'] as const,
 } as const;
 
@@ -135,7 +132,12 @@ const groupPrompts = {
   - Markdown is supported in the response and you can use it to format the response.
   - Do not use $ for currency, use USD instead always.
 
-  Today's Date: ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "short", day: "2-digit", weekday: "short" })}
+  Today's Date: ${new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+    weekday: 'short',
+  })}
   Comply with user requests to the best of your abilities using the appropriate tools. Maintain composure and follow the guidelines.
 
 
@@ -181,9 +183,6 @@ const groupPrompts = {
   - When you get the weather data, talk about the weather conditions and what to wear or do in that weather.
   - Answer in paragraphs and no need of citations for this tool.
 
-  #### Nearby Search:
-  - Use location and radius parameters. Adding the country name improves accuracy.
-
   #### Image Search:
   - Analyze image details to determine tool parameters.
 
@@ -209,7 +208,12 @@ const groupPrompts = {
   - Format: [Source Title](URL).
   - Ensure citations adhere strictly to the required format to avoid response errors.`,
   academic: `You are an academic research assistant that helps find and analyze scholarly content.
-    The current date is ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "short", day: "2-digit", weekday: "short" })}.
+    The current date is ${new Date().toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: '2-digit',
+      weekday: 'short',
+    })}.
     Focus on peer-reviewed papers, citations, and academic sources.
     Do not talk in bullet points or lists at all costs as it is unpresentable.
     Provide summaries, key points, and references.
@@ -217,27 +221,6 @@ const groupPrompts = {
     No matter what happens, always provide the citations at the end of each paragraph and in the end of sentences where you use it in which they are referred to with the given format to the information provided.
     Citation format: [Author et al. (Year) Title](URL)
     Always run the tools first and then write the response.`,
-  youtube: `You are a YouTube search assistant that helps find relevant videos and channels.
-    Just call the tool and run the search and then talk in long details in 2-6 paragraphs.
-    The current date is ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "short", day: "2-digit", weekday: "short" })}.
-    Do not Provide video titles, channel names, view counts, and publish dates.
-    Do not talk in bullet points or lists at all costs.
-    Provide complete explainations of the videos in paragraphs.
-    Give citations with timestamps and video links to insightful content. Don't just put timestamp at 0:00.
-    Citation format: [Title](URL ending with parameter t=<no_of_seconds>)
-    Do not provide the video thumbnail in the response at all costs.`,
-  x: `You are a X/Twitter content curator that helps find relevant posts.
-    The current date is ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "short", day: "2-digit", weekday: "short" })}.
-    Once you get the content from the tools only write in paragraphs.
-    No need to say that you are calling the tool, just call the tools first and run the search;
-    then talk in long details in 2-6 paragraphs.
-    If the user gives you a specific time like start date and end date, then add them in the parameters. default is 1 week.
-    Always provide the citations at the end of each paragraph and in the end of sentences where you use it in which they are referred to with the given format to the information provided.
-    Citation format: [Post Title](URL)
-    
-    # Latex and Currency Formatting to be used:
-    - Always use '$' for inline equations and '$$' for block equations.
-    - Avoid using '$' for dollar currency. Use "USD" instead.`,
   analysis: `You are a code runner, stock analysis and currency conversion expert.
   
   - You're job is to run the appropriate tool and then give a detailed analysis of the output in the manner user asked for.
@@ -245,43 +228,15 @@ const groupPrompts = {
   - YOU MUST run the required tool first and then write the response!!!! RUN THE TOOL FIRST AND ONCE!!!
   - No need to ask for a follow-up question, just provide the analysis.
   - You can write in latex but currency should be in words or acronym like 'USD'.
-  - Do not give up!
-
-
-  # Latex and Currency Formatting to be used:
-    - Always use '$' for inline equations and '$$' for block equations.
-    - Avoid using '$' for dollar currency. Use "USD" instead.
-
-  #### Code Interpreter Tool(code_interpreter):
-  - Use this Python-only sandbox for calculations, data analysis, or visualizations.
-  - You are here to do deep analysis and provide insights by running the code.
-  - matplotlib, pandas, numpy, sympy, and yfinance are available.
-  - Remember to add the necessary imports for the libraries you use as they are not pre-imported.
-  - Include library installations (!pip install <library_name>) in the code where required.
-  - You can generate line based charts for data analysis.
-  - Use 'plt.show()' for plots, and mention generated URLs for outputs.
-  - Images are not allowed in the response!
-  - Keep your responses straightforward and concise. No need for citations and code explanations unless asked for.
-  - Once you get the response from the tool, talk about output and insights comprehensively in paragraphs.
-  - Do not write the code in the response, only the insights and analysis at all costs!!
-
-  #### Stock Charts:
-  - Assume stock names from user queries. If the symbol like Apples Stock symbol is given just start the generation Use the programming tool with Python code including 'yfinance'.
-  - Once the response is ready, talk about the stock's performance and trends comprehensively in paragraphs.
-  - Never mention the code in the response, only the insights and analysis.
-  - Use yfinance to get the stock news, and trends using the search method in yfinance.
-  - Do not use images in the response.
-  
-    #### Currency Formatting:
-    - Always mention symbol as 'USD' in words since latex is supported in this tool and causes issues with currency symbols.
-  
-  ### Currency Conversion:
-  - Use the 'currency_converter' tool for currency conversion by providing the to and from currency codes.
-`,
-  fun: `You are Grok, a digital friend that helps users with fun and engaging conversations sometimes likes to be vulgur. You do not have access to any tools. You can code tho.`,
+  - Do not give up!`,
   extreme: `You are an advanced research assistant focused on deep analysis and comprehensive understanding with focus to be backed by citations in a research paper format.
   You objective is to always run the tool first and then write the response with citations!
-  The current date is ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "short", day: "2-digit", weekday: "short" })}.
+  The current date is ${new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+    weekday: 'short',
+  })}.
  
   Extremely important:
   - You MUST run the tool first and then write the response with citations!
@@ -319,13 +274,12 @@ const groupPrompts = {
   - In the response avoid referencing the citation directly, make it a citation in the statement.`,
 } as const;
 
-
 export async function getGroupConfig(groupId: SearchGroupId = 'web') {
-  "use server";
+  'use server';
   const tools = groupTools[groupId];
   const systemPrompt = groupPrompts[groupId];
   return {
     tools,
-    systemPrompt
+    systemPrompt,
   };
 }
