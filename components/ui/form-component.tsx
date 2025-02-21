@@ -945,7 +945,7 @@ const FormComponent: React.FC<FormComponentProps> = ({
   return (
     <div
       className={cn(
-        'relative w-full flex flex-col gap-2 rounded-lg transition-all duration-300 !font-sans',
+        'relative w-full flex flex-col gap-2 rounded-lg transition-all duration-300 !font-sans relative',
         hasInteracted ? 'z-[51]' : '',
         isDragging && 'ring-1 ring-neutral-300 dark:ring-neutral-700',
         attachments.length > 0 || uploadQueue.length > 0 ? 'bg-gray-100/70 dark:bg-neutral-800 p-1' : 'bg-transparent',
@@ -954,6 +954,8 @@ const FormComponent: React.FC<FormComponentProps> = ({
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
     >
+      <div className="absolute -inset-[1px] rounded-lg bg-gradient-to-r from-blue-500/90 dark:from-blue-400/90 to-transparent"></div>
+
       <AnimatePresence>
         {isDragging && (
           <motion.div

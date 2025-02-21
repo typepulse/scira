@@ -120,7 +120,7 @@ export default function AboutPage() {
             {/* Company Name/Logo */}
             <motion.div variants={item} className="text-center">
               <Link href="/" className="inline-flex items-center gap-3 text-4xl font-bold">
-                <img src="/logo.png" alt="SeekWise Logo" className="h-12 w-12 invert" />
+                <img src="/logo.svg" alt="SeekWise Logo" className="h-12 w-12 invert" />
                 <span>SeekWise</span>
               </Link>
             </motion.div>
@@ -572,7 +572,7 @@ export default function AboutPage() {
         <div className="mx-auto max-w-5xl px-4 py-12">
           <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
             <div className="flex items-center gap-3">
-              <img src="/logo.png" alt="SeekWise Logo" className="h-8 w-8 invert" />
+              <img src="/logo.svg" alt="SeekWise Logo" className="h-8 w-8 invert" />
               <p className="text-sm text-neutral-600 dark:text-neutral-400">
                 © {new Date().getFullYear()} All rights reserved.
               </p>
