@@ -43,6 +43,13 @@ async function fetchGoogleTrends(): Promise<TrendingQuery[]> {
         'sports',
         'finance',
         'football',
+        'games',
+        'movies',
+        'music',
+        'books',
+        'art',
+        'history',
+        'technology',
       ] as const;
 
       const schema = z.object({
@@ -146,6 +153,16 @@ export async function GET(req: Request) {
           icon: 'globe',
           text: 'Most beautiful places in Japan',
           category: 'travel',
+        },
+        {
+          icon: 'gamepad2',
+          text: 'Best Nintendo games of all time',
+          category: 'games',
+        },
+        {
+          icon: 'film',
+          text: 'Popular Recommendations for High-Scoring Movies',
+          category: 'movies',
         },
       ]);
     }

@@ -24,6 +24,7 @@ import {
   Flag,
   GithubLogo,
   Info,
+  PaintBrush,
   RoadHorizon,
   SoccerBall,
   TennisBall,
@@ -77,6 +78,10 @@ import {
   Zap,
   RotateCw,
   RefreshCw,
+  Gamepad2,
+  Clock,
+  BookOpen,
+  Music,
 } from 'lucide-react';
 import Marked, { ReactRenderer } from 'marked-react';
 import { useTheme } from 'next-themes';
@@ -1242,6 +1247,13 @@ const HomeContent = () => {
         sports: <TennisBall className="w-3 h-3" />,
         finance: <CurrencyDollar className="w-3 h-3" />,
         football: <SoccerBall className="w-3 h-3" />,
+        games: <Gamepad2 className="w-3 h-3" />,
+        movies: <Film className="w-3 h-3" />,
+        music: <Music className="w-3 h-3" />,
+        books: <BookOpen className="w-3 h-3" />,
+        art: <PaintBrush className="w-3 h-3" />,
+        history: <Clock className="w-3 h-3" />,
+        technology: <Code className="w-3 h-3" />,
       };
       return iconMap[category as keyof typeof iconMap] || <Sparkles className="w-3 h-3" />;
     };

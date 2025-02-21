@@ -298,155 +298,156 @@ export async function POST(req: Request) {
               };
             },
           }),
-          //   movie_or_tv_search: tool({
-          //     description: 'Search for a movie or TV show using TMDB API',
-          //     parameters: z.object({
-          //       query: z.string().describe('The search query for movies/TV shows'),
-          //     }),
-          //     execute: async ({ query }: { query: string }) => {
-          //       const TMDB_API_KEY = serverEnv.TMDB_API_KEY;
-          //       const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
+          movie_or_tv_search: tool({
+            description: 'Search for a movie or TV show using TMDB API',
+            parameters: z.object({
+              query: z.string().describe('The search query for movies/TV shows'),
+            }),
+            execute: async ({ query }: { query: string }) => {
+              const TMDB_API_KEY = serverEnv.TMDB_API_KEY;
+              const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 
-          //       try {
-          //         // First do a multi-search to get the top result
-          //         const searchResponse = await fetch(
-          //           `${TMDB_BASE_URL}/search/multi?query=${encodeURIComponent(
-          //             query,
-          //           )}&include_adult=true&language=en-US&page=1`,
-          //           {
-          //             headers: {
-          //               Authorization: `Bearer ${TMDB_API_KEY}`,
-          //               accept: 'application/json',
-          //             },
-          //           },
-          //         );
+              try {
+                // First do a multi-search to get the top result
+                const searchResponse = await fetch(
+                  `${TMDB_BASE_URL}/search/multi?query=${encodeURIComponent(
+                    query,
+                  )}&include_adult=true&language=en-US&page=1`,
+                  {
+                    headers: {
+                      Authorization: `Bearer ${TMDB_API_KEY}`,
+                      accept: 'application/json',
+                    },
+                  },
+                );
 
-          //         const searchResults = await searchResponse.json();
+                const searchResults = await searchResponse.json();
 
-          //         // Get the first movie or TV show result
-          //         const firstResult = searchResults.results.find(
-          //           (result: any) => result.media_type === 'movie' || result.media_type === 'tv',
-          //         );
+                // Get the first movie or TV show result
+                const firstResult = searchResults.results.find(
+                  (result: any) => result.media_type === 'movie' || result.media_type === 'tv',
+                );
 
-          //         if (!firstResult) {
-          //           return { result: null };
-          //         }
+                if (!firstResult) {
+                  return { result: null };
+                }
 
-          //         // Get detailed information for the media
-          //         const detailsResponse = await fetch(
-          //           `${TMDB_BASE_URL}/${firstResult.media_type}/${firstResult.id}?language=en-US`,
-          //           {
-          //             headers: {
-          //               Authorization: `Bearer ${TMDB_API_KEY}`,
-          //               accept: 'application/json',
-          //             },
-          //           },
-          //         );
+                // Get detailed information for the media
+                const detailsResponse = await fetch(
+                  `${TMDB_BASE_URL}/${firstResult.media_type}/${firstResult.id}?language=en-US`,
+                  {
+                    headers: {
+                      Authorization: `Bearer ${TMDB_API_KEY}`,
+                      accept: 'application/json',
+                    },
+                  },
+                );
 
-          //         const details = await detailsResponse.json();
+                const details = await detailsResponse.json();
 
-          //         // Get additional credits information
-          //         const creditsResponse = await fetch(
-          //           `${TMDB_BASE_URL}/${firstResult.media_type}/${firstResult.id}/credits?language=en-US`,
-          //           {
-          //             headers: {
-          //               Authorization: `Bearer ${TMDB_API_KEY}`,
-          //               accept: 'application/json',
-          //             },
-          //           },
-          //         );
+                // Get additional credits information
+                const creditsResponse = await fetch(
+                  `${TMDB_BASE_URL}/${firstResult.media_type}/${firstResult.id}/credits?language=en-US`,
+                  {
+                    headers: {
+                      Authorization: `Bearer ${TMDB_API_KEY}`,
+                      accept: 'application/json',
+                    },
+                  },
+                );
 
-          //         const credits = await creditsResponse.json();
+                const credits = await creditsResponse.json();
 
-          //         // Format the result
-          //         const result = {
-          //           ...details,
-          //           media_type: firstResult.media_type,
-          //           credits: {
-          //             cast:
-          //               credits.cast?.slice(0, 8).map((person: any) => ({
-          //                 ...person,
-          //                 profile_path: person.profile_path
-          //                   ? `https://image.tmdb.org/t/p/original${person.profile_path}`
-          //                   : null,
-          //               })) || [],
-          //             director: credits.crew?.find((person: any) => person.job === 'Director')?.name,
-          //             writer: credits.crew?.find((person: any) => person.job === 'Screenplay' || person.job === 'Writer')
-          //               ?.name,
-          //           },
-          //           poster_path: details.poster_path ? `https://image.tmdb.org/t/p/original${details.poster_path}` : null,
-          //           backdrop_path: details.backdrop_path
-          //             ? `https://image.tmdb.org/t/p/original${details.backdrop_path}`
-          //             : null,
-          //         };
+                // Format the result
+                const result = {
+                  ...details,
+                  media_type: firstResult.media_type,
+                  credits: {
+                    cast:
+                      credits.cast?.slice(0, 8).map((person: any) => ({
+                        ...person,
+                        profile_path: person.profile_path
+                          ? `https://image.tmdb.org/t/p/original${person.profile_path}`
+                          : null,
+                      })) || [],
+                    director: credits.crew?.find((person: any) => person.job === 'Director')?.name,
+                    writer: credits.crew?.find((person: any) => person.job === 'Screenplay' || person.job === 'Writer')
+                      ?.name,
+                  },
+                  poster_path: details.poster_path ? `https://image.tmdb.org/t/p/original${details.poster_path}` : null,
+                  backdrop_path: details.backdrop_path
+                    ? `https://image.tmdb.org/t/p/original${details.backdrop_path}`
+                    : null,
+                };
 
-          //         return { result };
-          //       } catch (error) {
-          //         console.error('TMDB search error:', error);
-          //         throw error;
-          //       }
-          //     },
-          //   }),
-          //   trending_movies: tool({
-          //     description: 'Get trending movies from TMDB',
-          //     parameters: z.object({}),
-          //     execute: async () => {
-          //       const TMDB_API_KEY = serverEnv.TMDB_API_KEY;
-          //       const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
+                return { result };
+              } catch (error) {
+                console.error('TMDB search error:', error);
+                throw error;
+              }
+            },
+          }),
+          trending_movies: tool({
+            description: 'Get trending movies from TMDB',
+            parameters: z.object({}),
+            execute: async () => {
+              const TMDB_API_KEY = serverEnv.TMDB_API_KEY;
+              const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 
-          //       try {
-          //         const response = await fetch(`${TMDB_BASE_URL}/trending/movie/day?language=en-US`, {
-          //           headers: {
-          //             Authorization: `Bearer ${TMDB_API_KEY}`,
-          //             accept: 'application/json',
-          //           },
-          //         });
+              try {
+                const response = await fetch(`${TMDB_BASE_URL}/trending/movie/day?language=en-US`, {
+                  headers: {
+                    Authorization: `Bearer ${TMDB_API_KEY}`,
+                    accept: 'application/json',
+                  },
+                });
 
-          //         const data = await response.json();
-          //         const results = data.results.map((movie: any) => ({
-          //           ...movie,
-          //           poster_path: movie.poster_path ? `https://image.tmdb.org/t/p/original${movie.poster_path}` : null,
-          //           backdrop_path: movie.backdrop_path
-          //             ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
-          //             : null,
-          //         }));
+                const data = await response.json();
+                // console.log('Trending movies:', data);
+                const results = data.results.map((movie: any) => ({
+                  ...movie,
+                  poster_path: movie.poster_path ? `https://image.tmdb.org/t/p/original${movie.poster_path}` : null,
+                  backdrop_path: movie.backdrop_path
+                    ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
+                    : null,
+                }));
 
-          //         return { results };
-          //       } catch (error) {
-          //         console.error('Trending movies error:', error);
-          //         throw error;
-          //       }
-          //     },
-          //   }),
-          //   trending_tv: tool({
-          //     description: 'Get trending TV shows from TMDB',
-          //     parameters: z.object({}),
-          //     execute: async () => {
-          //       const TMDB_API_KEY = serverEnv.TMDB_API_KEY;
-          //       const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
+                return { results };
+              } catch (error) {
+                console.error('Trending movies error:', error);
+                throw error;
+              }
+            },
+          }),
+          trending_tv: tool({
+            description: 'Get trending TV shows from TMDB',
+            parameters: z.object({}),
+            execute: async () => {
+              const TMDB_API_KEY = serverEnv.TMDB_API_KEY;
+              const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 
-          //       try {
-          //         const response = await fetch(`${TMDB_BASE_URL}/trending/tv/day?language=en-US`, {
-          //           headers: {
-          //             Authorization: `Bearer ${TMDB_API_KEY}`,
-          //             accept: 'application/json',
-          //           },
-          //         });
+              try {
+                const response = await fetch(`${TMDB_BASE_URL}/trending/tv/day?language=en-US`, {
+                  headers: {
+                    Authorization: `Bearer ${TMDB_API_KEY}`,
+                    accept: 'application/json',
+                  },
+                });
 
-          //         const data = await response.json();
-          //         const results = data.results.map((show: any) => ({
-          //           ...show,
-          //           poster_path: show.poster_path ? `https://image.tmdb.org/t/p/original${show.poster_path}` : null,
-          //           backdrop_path: show.backdrop_path ? `https://image.tmdb.org/t/p/original${show.backdrop_path}` : null,
-          //         }));
+                const data = await response.json();
+                const results = data.results.map((show: any) => ({
+                  ...show,
+                  poster_path: show.poster_path ? `https://image.tmdb.org/t/p/original${show.poster_path}` : null,
+                  backdrop_path: show.backdrop_path ? `https://image.tmdb.org/t/p/original${show.backdrop_path}` : null,
+                }));
 
-          //         return { results };
-          //       } catch (error) {
-          //         console.error('Trending TV shows error:', error);
-          //         throw error;
-          //       }
-          //     },
-          //   }),
+                return { results };
+              } catch (error) {
+                console.error('Trending TV shows error:', error);
+                throw error;
+              }
+            },
+          }),
           academic_search: tool({
             description: 'Search academic papers and research.',
             parameters: z.object({

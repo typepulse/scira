@@ -1068,7 +1068,7 @@ const FormComponent: React.FC<FormComponentProps> = ({
             <div
               className={cn(
                 'transition-all duration-100',
-                !hasInteracted && selectedModel !== 'openai:gpt-4o-mini' && selectedGroup !== 'extreme'
+                !hasInteracted && selectedModel !== 'openai:o3-mini' && selectedGroup !== 'extreme'
                   ? 'opacity-100 visible w-auto'
                   : 'opacity-0 invisible w-0',
               )}
