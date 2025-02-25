@@ -27,7 +27,7 @@ const seekwise = customProvider({
   languageModels: {
     'openai:gpt-4o-mini': openai('gpt-4o-mini'),
     // 'meta:llama-3.3-70b': cerebras('llama-3.3-70b'),
-    'anthropic:claude-3-5-sonnet-latest': anthropic('claude-3-5-sonnet-latest'),
+    'anthropic:claude-3-7-sonnet-latest': anthropic('claude-3-7-sonnet-latest'),
     'groq:deepseek-r1-distill-llama-70b': wrapLanguageModel({
       model: groq('deepseek-r1-distill-llama-70b'),
       middleware: extractReasoningMiddleware({ tagName: 'think' }),

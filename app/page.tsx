@@ -593,7 +593,7 @@ const YouTubeCard: React.FC<YouTubeCardProps> = ({ video, index }) => {
 const HomeContent = () => {
   const [query] = useQueryState('query', parseAsString.withDefault(''));
   const [q] = useQueryState('q', parseAsString.withDefault(''));
-  const [model] = useQueryState('model', parseAsString.withDefault('openai:gpt-4o-mini'));
+  const [model] = useQueryState('model', parseAsString.withDefault('anthropic:claude-3-7-sonnet-latest'));
 
   const initialState = useMemo(
     () => ({

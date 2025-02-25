@@ -67,6 +67,17 @@ const OpenaiIcon = ({ className }: { className?: string }) => (
 
 const models = [
   {
+    value: 'anthropic:claude-3-7-sonnet-latest',
+    label: 'Claude 3.7 Sonnet',
+    icon: AnthropicIcon,
+    iconClass: '!text-neutral-900 dark:!text-white',
+    description: "Anthropic's G.O.A.T. model",
+    color: 'bronze',
+    vision: true,
+    experimental: false,
+    category: 'Stable',
+  },
+  {
     value: 'openai:gpt-4o-mini',
     label: 'OpenAI gpt-4o-mini',
     icon: OpenaiIcon,
@@ -77,17 +88,7 @@ const models = [
     experimental: false,
     category: 'Stable',
   },
-  {
-    value: 'anthropic:claude-3-5-sonnet-latest',
-    label: 'Claude 3.5 Sonnet',
-    icon: AnthropicIcon,
-    iconClass: '!text-neutral-900 dark:!text-white',
-    description: "Anthropic's G.O.A.T. model",
-    color: 'bronze',
-    vision: true,
-    experimental: false,
-    category: 'Stable',
-  },
+
   //   {
   //     value: 'meta:llama-3.3-70b',
   //     label: 'Llama 3.3 70B',
@@ -945,7 +946,7 @@ const FormComponent: React.FC<FormComponentProps> = ({
   return (
     <div
       className={cn(
-        'relative w-full flex flex-col gap-2 rounded-lg transition-all duration-300 !font-sans relative',
+        'relative w-full flex flex-col gap-2 rounded-lg transition-all duration-300 !font-sans',
         hasInteracted ? 'z-[51]' : '',
         isDragging && 'ring-1 ring-neutral-300 dark:ring-neutral-700',
         attachments.length > 0 || uploadQueue.length > 0 ? 'bg-gray-100/70 dark:bg-neutral-800 p-1' : 'bg-transparent',
