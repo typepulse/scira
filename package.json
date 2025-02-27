@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --port 3001",
+    "dev": "next dev --port 3998",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "knip": "knip"
+    "knip": "knip",
+    "env:pull": "vercel env pull --environment=preview .env.local"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^1.1.6",
