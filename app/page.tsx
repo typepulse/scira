@@ -1269,12 +1269,12 @@ const HomeContent = () => {
               {[1, 2, 3, 4, 5, 6].map((_, index) => (
                 <div
                   key={index}
-                  className="flex-shrink-0 h-12 w-[120px] rounded-lg bg-neutral-50/80 dark:bg-neutral-800/80 
+                  className="flex-shrink-0 h-12 w-[120px] rounded-lg bg-neutral-50/80 dark:bg-neutral-800/80
                                                      border border-neutral-200/50 dark:border-neutral-700/50"
                 >
                   <div className="flex items-start gap-1.5 h-full p-2">
                     <div
-                      className="w-4 h-4 rounded-md bg-neutral-200/50 dark:bg-neutral-700/50 
+                      className="w-4 h-4 rounded-md bg-neutral-200/50 dark:bg-neutral-700/50
                                                               animate-pulse mt-0.5"
                     />
                     <div className="space-y-1 flex-1">
@@ -1576,7 +1576,7 @@ const HomeContent = () => {
                   status={status}
                   setHasSubmitted={setHasSubmitted}
                 />
-                {memoizedSuggestionCards}
+                {/* {memoizedSuggestionCards} */}
               </motion.div>
             )}
           </AnimatePresence>
